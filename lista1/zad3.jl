@@ -1,7 +1,5 @@
 # Marek Traczyński (261748)
 # Zadanie 3
-# Marek Traczyński (261748)
-# Zadanie 3
 
 
 using Distributions
