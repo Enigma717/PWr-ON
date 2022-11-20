@@ -9,19 +9,19 @@ include("auxiliary/matcond.jl")
 include("auxiliary/hilb.jl")
 
 
-#Obliczanie wyniku za pomocą metody eliminacji Gaussa
+# Obliczanie wyniku za pomocą metody eliminacji Gaussa
 function gaussmethod(matrix::Matrix{<:AbstractFloat},
                vector::Vector{<:AbstractFloat})::Vector{Float64}
     return matrix \ vector
 end
 
-#Obliczanie wyniku za pomocą odwrotności macierzy
+# Obliczanie wyniku za pomocą odwrotności macierzy
 function invmethod(matrix::Matrix{<:AbstractFloat}, 
                    vector::Vector{<:AbstractFloat})::Vector{Float64}
     return inv(matrix) * vector
 end
 
-#Obliczanie błędu względnego wyniku
+# Obliczanie błędu względnego wyniku
 function approxerror(approx::Vector{<:AbstractFloat},
                      real::Vector{<:AbstractFloat})::Float64
     return norm(approx - real) / norm(real)
@@ -32,7 +32,7 @@ function main()
     nvalues::Vector{Int} = [5, 10, 20]
     cvalues::Vector{Float64} = [1.0, 10.0, 10.0 ^ 3.0, 10.0 ^ 7.0, 10.0 ^ 12.0, 10.0 ^ 16.0]
 
-    
+
     print("\n====================================================\n\n")
     
     println(">>> Hilbert matrix test (rank(a), cond(a), error for gauss, error for inv): ") 

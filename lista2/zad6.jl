@@ -3,6 +3,8 @@
 # Lista 2 Zadanie 6
 
 
+# Obliczanie rekurencyjnie funkcji zbioru Mandelbrota 
+# dla rzeczywistych c (f_c(x) = x ^ 2 + c)
 function mandelbrot(n::Integer, x::AbstractFloat, c::AbstractFloat)::Float64
     if n == 0
         return x
@@ -12,6 +14,7 @@ function mandelbrot(n::Integer, x::AbstractFloat, c::AbstractFloat)::Float64
 
     return xn ^ 2 + c
 end
+
 
 function main()
     tuples::Vector{Tuple{Float64, Float64}} = [(-2.0, 1.0)
@@ -25,7 +28,7 @@ function main()
     c::Float64 = zero(Float64)
     x::Float64 = zero(Float64)
 
-    
+
     print("\n====================================================\n")
 
     for tuple in tuples

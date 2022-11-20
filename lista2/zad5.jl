@@ -3,6 +3,7 @@
 # Lista 2 Zadanie 5
 
 
+# Obliczanie rekurencyjnie modelu wzrostu populacji
 function growthmodel(n::Integer, r::AbstractFloat, p::AbstractFloat, type::DataType)
     if n == 0
         return p
