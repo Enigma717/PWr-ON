@@ -32,14 +32,15 @@ function main()
     nvalues::Vector{Int} = [5, 10, 20]
     cvalues::Vector{Float64} = [1.0, 10.0, 10.0 ^ 3.0, 10.0 ^ 7.0, 10.0 ^ 12.0, 10.0 ^ 16.0]
 
+    
     print("\n====================================================\n\n")
     
     println(">>> Hilbert matrix test (rank(a), cond(a), error for gauss, error for inv): ") 
     println("|") 
 
-    for i in 1:20
-        a::Matrix{Float64} = hilb(i)
-        x::Vector{Float64} = ones(Float64, i)
+    for n in 1:20
+        a::Matrix{Float64} = hilb(n)
+        x::Vector{Float64} = ones(Float64, n)
         b::Vector{Float64} = a * x
 
         arank::Int = rank(a)
@@ -50,8 +51,7 @@ function main()
         invres::Vector{Float64} = invmethod(a, b)
         inverr::Float64 = approxerror(invres, b)
 
-        print("|--> Result for size = $i:\t$arank,\t$acond,\t$gausserr,\t$inverr\n") 
-
+        print("|--> Result for size = $n:\t$arank,\t$acond,\t$gausserr,\t$inverr\n") 
     end
     
 

@@ -81,6 +81,7 @@ function main()
     types = [Float32, Float64]
     exactresult = 1.00657107000000 * 10^(-11)
 
+    
     for type in types
         products = scalarproduct(x, y, type)
         uptoresult::type = uptosum(products, type)

@@ -17,6 +17,7 @@ end
 function main()
     types::Vector{DataType} = [Float32, Float64]
 
+    
     print("\n====================================================\n")
 
     for type in types

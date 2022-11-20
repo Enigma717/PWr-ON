@@ -25,6 +25,7 @@ function main()
     c::Float64 = zero(Float64)
     x::Float64 = zero(Float64)
 
+    
     print("\n====================================================\n")
 
     for tuple in tuples
