@@ -1,6 +1,6 @@
 # Marek Traczyński (261748)
 # Obliczenia Naukowe
-# Lista 2 Zadanie 5
+# Lista 2 Zadanie 6
 
 
 function mandelbrot(n::Integer, x::AbstractFloat, c::AbstractFloat)::Float64
