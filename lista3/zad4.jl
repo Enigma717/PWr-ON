@@ -16,11 +16,11 @@ function main()
     delta::Float64 = 0.5 * (10.0 ^ -5)
     epsilon::Float64 = 0.5 * (10.0 ^ -5)
 
-    # Wektory z argumentami funkcji
+    # Argumentamy funkcji
     abvalues::Tuple{Float64, Float64} = (1.5, 2.0)
     secantxvalues::Tuple{Float64, Float64} = (1.0, 2.0)
     newtonxvalue::Float64 = 1.5
-    maxit::Int = 20
+    maxit::Int = 64
 
     # Struktura z rozwiązaniem
     result::RootFuncResult = RootFuncResult(0.0, 0.0, 0, 0)

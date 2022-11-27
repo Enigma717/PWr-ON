@@ -25,8 +25,8 @@ function main()
                                                       (-0.7, 0.3)]
     newtonxvalues::Vector{Float64} = [0.5, 
                                       0.5]
-    maxitvalues::Vector{Int} = [1000,
-                                1000]
+    maxitvalues::Vector{Int} = [64,
+                                64]
 
     # Struktura z rozwiązaniem
     result::RootFuncResult = RootFuncResult(0.0, 0.0, 0, 0)
@@ -69,7 +69,32 @@ function main()
         println(" |--> err = $(result.error)")
     end
     
-    print("\n====================================================\n")
+    
+    for value::Int in 2:20
+        print("\n====================================================\n")
+        
+        result = mstycznych(functions[1], derivatives[1],
+                            Float64(value),
+                            delta, epsilon, 
+                            maxitvalues[1])
+        print("\n>>> Newton's method test results for $(functions[1]) and x0 = $value:\n")
+        println(" |--> r = $(result.root)")
+        println(" |--> v = $(result.rootvalue)")
+        println(" |--> it = $(result.iterations)")
+        println(" |--> err = $(result.error)")
+
+        print("\n----------------------------------------\n")
+
+        result = mstycznych(functions[2], derivatives[2],
+                            Float64(value),
+                            delta, epsilon, 
+                            maxitvalues[2])
+        print("\n>>> Newton's method test results for $(functions[2]) and x0 = $value:\n")
+        println(" |--> r = $(result.root)")
+        println(" |--> v = $(result.rootvalue)")
+        println(" |--> it = $(result.iterations)")
+        println(" |--> err = $(result.error)")
+    end
 end
 
 main()
