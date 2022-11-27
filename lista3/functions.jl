@@ -6,7 +6,7 @@
 module RootsFunctions
 
 export RootFuncResult
-export RESULT_ERROR_ZERO, RESULT_ERROR_ONE, RESULT_ERROR_TWO
+export RESULT_ERROR_ONE, RESULT_ERROR_TWO
 export mbisekcji, mstycznych, msiecznych
 
 
@@ -35,13 +35,11 @@ end
 #= 
 Stałe kodów błędów
 
-    RESULT_ERROR_ZERO = metoda zbieżna
     RESULT_ERROR_ONE = funkcja nie zmienia znaku w przedziale (mbisekcji) / 
                        nie osiągnięto wymaganej dokładności w maxit iteracji      
     RESULT_ERROR_TWO = pochodna bliska zeru
 
 =#
-const RESULT_ERROR_ZERO = RootFuncResult(0.0, 0.0, 0, 0)
 const RESULT_ERROR_ONE = RootFuncResult(0.0, 0.0, 0, 1)
 const RESULT_ERROR_TWO = RootFuncResult(0.0, 0.0, 0, 2)
 
@@ -110,7 +108,7 @@ function mstycznych(f::Function, pf::Function, x0::Float64,
     dvalue::Float64 = 0.0
 
     if abs(v) <= epsilon
-        return RESULT_ERROR_ZERO
+        return (x0, v, 0, 0)
     end
 
     for it::Int in 1:1:maxit
