@@ -108,7 +108,7 @@ function mstycznych(f::Function, pf::Function, x0::Float64,
     dvalue::Float64 = 0.0
 
     if abs(v) <= epsilon
-        return (x0, v, 0, 0)
+        return RootFuncResult(x0, v, 0, 0)
     end
 
     for it::Int in 1:1:maxit
