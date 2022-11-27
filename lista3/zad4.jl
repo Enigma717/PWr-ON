@@ -61,7 +61,7 @@ function main()
     println(" |--> it = $(result.iterations)")
     println(" |--> err = $(result.error)")
 
-    print("\n====================================================\n")
+    print("\n====================================================\n\n")
 end
 
 main()

@@ -95,6 +95,9 @@ function main()
         println(" |--> it = $(result.iterations)")
         println(" |--> err = $(result.error)")
     end
+
+    print("\n====================================================\n\n")
+
 end
 
 main()
