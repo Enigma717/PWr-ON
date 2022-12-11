@@ -5,6 +5,7 @@
 
 include("./interpolation.jl")
 using .Interpolation
+using Test
 
 
 function main()
@@ -26,9 +27,11 @@ function main()
 
 
     foreach(rm, filter(endswith(".png"), readdir("./plots/tests/", join = true)))
+    
     for (index, func) in enumerate(functions)
         print("\n====================================================\n")
         print("\n>>> Function number $func <<\n")
+        
         for n in nvalues
             filepath = "./plots/tests/intpolfun$(index)n$(n).png"
             rysujnnfx(func, abvalues[index][1], abvalues[index][2], n, filepath)

@@ -89,7 +89,7 @@ Rysowanie interpolacji wielomianowej podanej funkcji na przedziale [a, b]
 =#
 function rysujnnfx(f::Function, a::Float64, b::Float64, n::Int, path::String)
     iterations::Int = n + 1
-    density::Int = 10
+    density::Int = 100
     h::Float64 = zero(Float64)
     currentvalue::Float64 = zero(Float64)
 
