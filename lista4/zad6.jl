@@ -1,6 +1,6 @@
 # Marek Traczyński (261748)
 # Obliczenia Naukowe
-# Lista 4 Zadanie 1, 2, 3, 4
+# Lista 4 Zadanie 6
 
 
 include("./interpolation.jl")

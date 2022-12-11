@@ -22,12 +22,12 @@ function main()
 
 
     foreach(rm, filter(endswith(".png"), readdir("./plots/zad5/", join = true)))
-    for (indexi, func) in enumerate(functions)
+    for (index, func) in enumerate(functions)
         print("\n====================================================\n")
         print("\n>>> Function number $func <<\n")
         for n in nvalues
-            filepath = "./plots/zad5/intpol$(func)n$(n).png"
-            rysujnnfx(func, abvalues[indexi][1], abvalues[indexi][2], n, filepath)
+            filepath = "./plots/zad5/intpolfun$(index)n$(n).png"
+            rysujnnfx(func, abvalues[index][1], abvalues[index][2], n, filepath)
             
             println(" |--> Saved plot for n = $n as $filepath <<")
         end
