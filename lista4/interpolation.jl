@@ -131,9 +131,9 @@ function rysujnnfx(f::Function, a::Float64, b::Float64, n::Int, path::String)
     interplot = plot(interpolationx,
                      [polynomialfx, interpolationfx],
                      plot_title = "Interpolacja wielomianowa dla n = $n",
-                     label = ["rzeczywista funkcja" "zinterpolowana funkcja"],
-                     linewidth = 3,
+                     label = ["Interpolowana funkcja" "Wielomian interpolacyjny"],
                      legend_position = :topleft,
+                     linewidth = 3,
                      size = (800, 600),
                      dpi = 300)
                     
