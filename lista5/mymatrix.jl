@@ -1,6 +1,9 @@
 # Marek Traczyński (261748)
 # Obliczenia Naukowe
 # Lista 5
+#
+# Struktura i operacje na własnej macierzy rzadkiej
+# oraz funkcje obliczające układy równań liniowych
 
 
 module blocksys
@@ -14,7 +17,6 @@ export firstnzval_row, lastnzval_row,
        solve_gauss!, solve_pivotgauss!,
        solve_lu!, solve_pivotlu!,
        solve_combinedlu!, solve_combinedpivotlu!
-
 
 
 ######################
@@ -66,7 +68,6 @@ mutable struct MySpraseMatrix
 
         if (bsize < 2) || (msize % bsize != 0)
             println("Wrong matrix/blocks size!")
-
             return nothing
         end
 
@@ -100,6 +101,7 @@ end
 =#
 function firstnzval_row(bsize::Integer, rowindex::Integer)
     temp::Int = 0
+    
     if (rowindex - 1) % bsize == 0
         temp = rowindex - bsize
     else
@@ -140,6 +142,7 @@ end
 =#
 function lastnzval_col(msize::Integer, bsize::Integer, colindex::Integer)
     temp::Int = 0
+
     if colindex % bsize == 0
         temp = colindex + bsize
     else
@@ -199,6 +202,7 @@ end
 
 
 #=
+    Przeciążenie mnożenia własnej macierzy rzadkiej z dowolnym wektorem
 =#
 function Base.:*(mat::MySpraseMatrix, vec::Vector{Float64})
     if mat.matrixsize != length(vec)
@@ -223,7 +227,18 @@ end
 # Obliczanie układów równań liniowych #
 #######################################
 
-# Obliczanie wektora prawych stron b dla x ∈ [1, 1, 1, ..., 1].
+#= 
+    Obliczanie wektora prawych stron b dla x ∈ [1, 1, 1, ..., 1].
+
+
+    Z racji, że mnożenie elementów naszej macierzy przez kolejne jedynki 
+    nic nie zmienia w uzyskiwanym wyniku, możemy pominąć "istnienie" wektora x 
+    i wyliczać kolejne wiersze wektora b na podstawie samej macierzy rzadkiej.
+
+    Ten sam efekt uzyskamy po prostu mnożąć operatorem * (przeciążonego w funkcji wyżej)
+    naszą macierz przez wektor jedynek, jednak gwoli odosobnienia specjalnego przypadku
+    jakim jest generowanie wektora prawych stron b, wolałem umieścić go w osobnej funkcji.
+=#
 function solve_resultvector(mat::MySpraseMatrix)
     resultvec::Vector{Float64} = zeros(Float64, mat.matrixsize)
 

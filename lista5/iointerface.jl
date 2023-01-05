@@ -1,11 +1,17 @@
 # Marek Traczyński (261748)
 # Obliczenia Naukowe
 # Lista 5
+#
+# Funkcje obsługi plików
 
 
 include("./mymatrix.jl")
 using .blocksys
 
+
+###########################
+# Funkcje odczytu z pliku #
+###########################
 
 #=
     Odczytywanie głównej macierzy A z pliku w podanej ścieżce.
@@ -60,6 +66,11 @@ function readvector(path::String)
     end
 end
 
+
+
+###########################
+# Funkcje zapisu do pliku #
+###########################
 
 #=
     Zapisywanie do pliku wektora z wyliczonymi wartościami x.
