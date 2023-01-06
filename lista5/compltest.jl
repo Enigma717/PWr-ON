@@ -27,7 +27,7 @@ const COND_NUMBER::Float64 = 1.0
 function plotgen()
     functions::Vector{Function} = [solve_gauss!, solve_pivotgauss!, 
                                    solve_combinedlu!, solve_combinedpivotlu!]
-    sizes::Vector{Int} = collect(1000:1000:100000)
+    sizes::Vector{Int} = collect(2000:2000:100000)
     times::Vector{Vector{Float64}} = Vector{Vector{Float64}}(undef, length(functions))
     
 
@@ -39,7 +39,7 @@ function plotgen()
         matrixgen.blockmat(100, BLOCK_SIZE, COND_NUMBER, "Atemp.txt")
             
         readmat::READ_MATRIX_TYPE = readmatrix("Atemp.txt")
-        sparsematrix::MySpraseMatrix = MySpraseMatrix(readmat[1], readmat[2], readmat[3])
+        sparsematrix::MySparseMatrix = MySparseMatrix(readmat[1], readmat[2], readmat[3])
         resultvec::Vector{Float64} = solve_resultvector(sparsematrix)
 
         func(deepcopy(sparsematrix), deepcopy(resultvec))
@@ -56,7 +56,7 @@ function plotgen()
             matrixgen.blockmat(size, BLOCK_SIZE, COND_NUMBER, "Atemp.txt")
             
             readmat::READ_MATRIX_TYPE = readmatrix("Atemp.txt")
-            sparsematrix::MySpraseMatrix = MySpraseMatrix(readmat[1], readmat[2], readmat[3])
+            sparsematrix::MySparseMatrix = MySparseMatrix(readmat[1], readmat[2], readmat[3])
             resultvec::Vector{Float64} = solve_resultvector(sparsematrix)
             
             time = @elapsed func(deepcopy(sparsematrix), deepcopy(resultvec))

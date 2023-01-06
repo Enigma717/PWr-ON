@@ -9,7 +9,7 @@
 module blocksys
 
 
-export MySpraseMatrix
+export MySparseMatrix
 export firstnzval_row, lastnzval_row,
        firstnzval_col, lastnzval_col,
        factorization_lu!, factorization_pivotlu!,
@@ -48,7 +48,7 @@ export firstnzval_row, lastnzval_row,
         blocksize  - Rozmiar pojedynczego bloku w macierzy
         blockcount - Liczba bloków w głównej macierzy
 =#
-mutable struct MySpraseMatrix
+mutable struct MySparseMatrix
     mymatrix::Vector{Vector{Float64}}
     rowslices::Vector{UnitRange{Int}}
     colslices::Vector{UnitRange{Int}}
@@ -57,7 +57,7 @@ mutable struct MySpraseMatrix
     blockcount::Int
 
     
-    function MySpraseMatrix(msize::Integer, bsize::Integer, values::Vector{Tuple{Int, Int, Float64}})
+    function MySparseMatrix(msize::Integer, bsize::Integer, values::Vector{Tuple{Int, Int, Float64}})
         matrix::Vector{Vector{Float64}} = Vector{Vector{Float64}}(undef, msize)
         rslices::Vector{UnitRange{Int}} = Vector{UnitRange{Int}}(undef, msize)
         cslices::Vector{UnitRange{Int}} = Vector{UnitRange{Int}}(undef, msize)
@@ -172,7 +172,7 @@ end
     nie musimy trzymać w naszej macierzy niepotrzebnych zer (których
     przyjęcie w obliczeniach nie zmienia nam wyniku).
 =#
-function Base.getindex(mat::MySpraseMatrix, rowindex::Integer, colindex::Integer)
+function Base.getindex(mat::MySparseMatrix, rowindex::Integer, colindex::Integer)
     if colindex ∉ mat.rowslices[rowindex]
         return 0.0
     end
@@ -190,7 +190,7 @@ end
     W przypadku próby nadpisania elementu na indeksie poza
     macierzą dopisujemy do danego wiersza wartość 0.0.
 =#
-function Base.setindex!(mat::MySpraseMatrix, value::Float64, rowindex::Integer, colindex::Integer)
+function Base.setindex!(mat::MySparseMatrix, value::Float64, rowindex::Integer, colindex::Integer)
     if colindex ∉ mat.rowslices[rowindex]
         push!(mat.mymatrix[rowindex], 0.0)
 
@@ -204,7 +204,7 @@ end
 #=
     Przeciążenie mnożenia własnej macierzy rzadkiej z dowolnym wektorem
 =#
-function Base.:*(mat::MySpraseMatrix, vec::Vector{Float64})
+function Base.:*(mat::MySparseMatrix, vec::Vector{Float64})
     if mat.matrixsize != length(vec)
         println("Incorrect matrix and vector size!")
         return nothing
@@ -239,7 +239,7 @@ end
     naszą macierz przez wektor jedynek, jednak gwoli odosobnienia specjalnego przypadku
     jakim jest generowanie wektora prawych stron b, wolałem umieścić go w osobnej funkcji.
 =#
-function solve_resultvector(mat::MySpraseMatrix)
+function solve_resultvector(mat::MySparseMatrix)
     resultvec::Vector{Float64} = zeros(Float64, mat.matrixsize)
 
     for row in 1:mat.matrixsize
@@ -258,7 +258,7 @@ end
     Rozwiązywanie układu równań liniowych Ax = b za pomocą 
     metody Gaussa bez wyboru elementu głównego.
 =#
-function solve_gauss!(mat::MySpraseMatrix, resultvec::Vector{Float64})
+function solve_gauss!(mat::MySparseMatrix, resultvec::Vector{Float64})
     xvec::Vector{Float64} = Vector{Float64}(undef, mat.matrixsize)
     factor::Float64 = 0.0
 
@@ -303,7 +303,7 @@ end
     nie modyfikujemy naszej głównej macierzy, a jedynie odwołujemy się do 
     odpowiednich wierszy z wektora roworder, zamiast bezpośrednio do badanego indeksu.
 =#
-function solve_pivotgauss!(mat::MySpraseMatrix, resultvec::Vector{Float64})
+function solve_pivotgauss!(mat::MySparseMatrix, resultvec::Vector{Float64})
     xvec::Vector{Float64} = Vector{Float64}(undef, mat.matrixsize)
     roworder::Vector{Int} = collect(1:mat.matrixsize)
     factor::Float64 = 0.0
@@ -358,7 +358,7 @@ end
 #=
     Wyznaczanie rozkładu LU bez wyboru elementu głównego.
 =#
-function factorization_lu!(mat::MySpraseMatrix)
+function factorization_lu!(mat::MySparseMatrix)
     factor::Float64 = 0.0
 
     for col in 1:(mat.matrixsize - 1)
@@ -377,7 +377,7 @@ end
 #=
     Wyznaczanie rozkładu LU z częściowym wyborem elementu głównego
 =#
-function factorization_pivotlu!(mat::MySpraseMatrix)
+function factorization_pivotlu!(mat::MySparseMatrix)
     roworder::Vector{Int} = collect(1:mat.matrixsize)
     factor::Float64 = 0.0
     maxincol_index::Int = 0
@@ -416,7 +416,7 @@ end
     Rozwiązywanie układu równań liniowych Ax = b z wyznaczonym 
     rozkładem LU (LUx = b) bez wyboru elementu głównego.
 =#
-function solve_lu!(mat::MySpraseMatrix, resultvec::Vector{Float64})
+function solve_lu!(mat::MySparseMatrix, resultvec::Vector{Float64})
     xvec::Vector{Float64} = Vector{Float64}(undef, mat.matrixsize)
 
     for col in 1:(mat.matrixsize - 1)
@@ -443,7 +443,7 @@ end
     Rozwiązywanie układu równań liniowych Ax = b z wyznaczonym 
     rozkładem LU (LUx = b) z częściowym wyborem elementu głównego.
 =#
-function solve_pivotlu!(mat::MySpraseMatrix, resultvec::Vector{Float64}, roworder::Vector{<:Integer})
+function solve_pivotlu!(mat::MySparseMatrix, resultvec::Vector{Float64}, roworder::Vector{<:Integer})
     xvec::Vector{Float64} = Vector{Float64}(undef, mat.matrixsize)
 
     for row in 2:mat.matrixsize
@@ -471,7 +471,7 @@ end
     Połączone w jednej funkcji wyznaczanie rozkładu LU bez wyboru elementu głównego 
     oraz rozwiązywanie dla niego układu równań liniowych. 
 =#
-function solve_combinedlu!(mat::MySpraseMatrix, resultvec::Vector{Float64})
+function solve_combinedlu!(mat::MySparseMatrix, resultvec::Vector{Float64})
     factorization_lu!(mat)
     solution::Vector{Float64} = solve_lu!(mat, resultvec)
 
@@ -483,7 +483,7 @@ end
     Połączone w jednej funkcji wyznaczanie rozkładu LU z częściowym wyborem elementu 
     głównego oraz rozwiązywanie dla niego układu równań liniowych. 
 =#
-function solve_combinedpivotlu!(mat::MySpraseMatrix, resultvec::Vector{Float64})
+function solve_combinedpivotlu!(mat::MySparseMatrix, resultvec::Vector{Float64})
     order::Vector{Int} = factorization_pivotlu!(mat)
     solution::Vector{Float64} = solve_pivotlu!(mat, resultvec, order)
 

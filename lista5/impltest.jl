@@ -41,7 +41,7 @@ function tests()
 
             readmat::READ_MATRIX_TYPE = readmatrix(matrixpath)
             readvec::READ_VECTOR_TYPE = readvector(vectorpath)
-            sparsematrix::MySpraseMatrix = MySpraseMatrix(readmat[1], readmat[2], readmat[3])
+            sparsematrix::MySparseMatrix = MySparseMatrix(readmat[1], readmat[2], readmat[3])
 
             println("\n\t   >> Matrix size (n): $(readmat[1])\t Block size (l): $(readmat[2]) <<")
             
@@ -77,7 +77,7 @@ function tests()
             matrixgen.blockmat(size, BLOCK_SIZE, COND_NUMBER, matrixpath)
             
             readmat::READ_MATRIX_TYPE = readmatrix(matrixpath)
-            sparsematrix::MySpraseMatrix = MySpraseMatrix(readmat[1], readmat[2], readmat[3])
+            sparsematrix::MySparseMatrix = MySparseMatrix(readmat[1], readmat[2], readmat[3])
             resultvec::Vector{Float64} = solve_resultvector(sparsematrix)
             onesvec::Vector{Float64} = ones(Float64, sparsematrix.matrixsize)
 
